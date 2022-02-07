@@ -22,23 +22,24 @@ public class Year {
     static Date today = new Date();
 
     static String yearString = date.format(today);
-    static String mounthString = dateM.format(today);
+    static String monthString = dateM.format(today);
     static String dayString = dated.format(today);
 
     static int yearCurrent = Integer.parseInt(yearString);
-    static int mounthCurrent = Integer.parseInt(mounthString);
+    static int monthCurrent = Integer.parseInt(monthString);
     static int dayCurrent = Integer.parseInt(dayString);
 
     /**
      * Define a quantidade de dias que tem um ano.
      */
-    static final int DAY = 365;
+    static final int YEAR = 365;
+    static final int MONTH = 30;
 
     /**
      * Armazena a data de aniverśario do usuário em partes.
      */
     private static int yearBirthday;
-    private static int mounthBirthday;
+    private static int monthBirthday;
     private static int dayBirthday;
 
     /**
@@ -67,16 +68,16 @@ public class Year {
      * Obtém o mês de nascimento do usuário.
      * @return Retorna o mês de nascimento do usuário.
      */
-    public static int getMounthBirthday() {
-        return mounthBirthday;
+    public static int getMonthBirthday() {
+        return monthBirthday;
     }
 
     /**
-     * Introduz na variável 'mounthBirthday' o valor do mês de nascimento do usuário.
-     * @param mounthBirthday Mês de aniversário do usuário.
+     * Introduz na variável 'monthBirthday' o valor do mês de nascimento do usuário.
+     * @param monthBirthday Mês de aniversário do usuário.
      */
-    public static void setMounthBirthday(int mounthBirthday) {
-        Year.mounthBirthday = mounthBirthday;
+    public static void setMonthBirthday(int monthBirthday) {
+        Year.monthBirthday = monthBirthday;
     }
 
     /**
@@ -110,17 +111,28 @@ public class Year {
     public static void calcTime(){
 
         int y = yearCurrent - yearBirthday;
-        int m = mounthCurrent;
+        int m = monthCurrent;
         int d = dayCurrent - dayBirthday;
-        int total = DAY * y;
 
-        if(mounthCurrent < mounthBirthday){
+        /**
+         * Corrigido o problema quando o dia do aniversariante é superior ao dia atual, qual apresentava
+         * um dia negativo. Agora foi colocado um cálculo que consiste em subtrair o valor do dia de
+         * nascimento com o número de dias do mês que nasceu, e somar o dia atual com o resultado da
+         * subtração.
+         */
+        if(d < 1){
+            d = (30 - dayBirthday) + dayCurrent;
+        }
+
+        int total = YEAR * y;
+
+        if(monthCurrent < monthBirthday){
             y--;
         }else{
             m--;
         }
 
-        System.out.println("You live "+y+" years "+ m +" mounths and "+d+" days = "+total+" total days");
+        System.out.println("You live "+y+" years "+ m +" months and "+d+" days = "+total+" total days");
     }
 }
 
